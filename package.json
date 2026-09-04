@@ -1,5 +1,6 @@
 {
-  "name": "c-codeprojects-sites-discussionbridge-discussionbridge-dev-sandbox-discussionbridge-dev-astrostarlight-sandbox-discussionbridge-dev-site",
+  "name": "discussionbridge-sandbox-astrostarlight",
+  "private": true,
   "type": "module",
   "version": "0.0.1",
   "scripts": {
@@ -7,12 +8,16 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "deploy:dry-run": "wrangler deploy --dry-run",
+    "deploy": "wrangler deploy --strict"
   },
   "dependencies": {
     "@astrojs/starlight": "^0.42.0",
     "astro": "^7.2.10",
-    "astro-discussion-bridge": "file:../../../../../../Products/DiscussionBridge/.build-artifacts/astro-discussion-bridge-0.1.0-alpha.20260903.7.tgz",
     "sharp": "^0.35.3"
+  },
+  "devDependencies": {
+    "wrangler": "4.129.0"
   }
 }
