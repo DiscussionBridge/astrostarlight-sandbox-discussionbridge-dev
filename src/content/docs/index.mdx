@@ -1,0 +1,33 @@
+---
+title: Astro + Starlight sandbox
+description: Fresh DiscussionBridge Astro + Starlight development environment.
+template: splash
+hero:
+  tagline: A fresh, resettable environment for testing DiscussionBridge without touching the public demos.
+  image:
+    file: ../../assets/houston.webp
+  actions:
+    - text: Sandbox guide
+      link: /guides/example/
+      icon: right-arrow
+    - text: All sandboxes
+      link: https://sandbox.discussionbridge.dev/
+      icon: external
+      variant: minimal
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+## Sandbox boundary
+
+<CardGrid stagger>
+	<Card title="Fresh source" icon="pencil">
+		This site has its own source, build output, connection, and reset history.
+	</Card>
+	<Card title="Receiving forum" icon="document">
+		Bridge testing targets [the sandbox forum](https://sandbox-forum.discussionbridge.dev/).
+	</Card>
+	<Card title="No public indexing" icon="setting">
+		The sandbox is deliberately marked `noindex` and may be reset without notice.
+	</Card>
+</CardGrid>
