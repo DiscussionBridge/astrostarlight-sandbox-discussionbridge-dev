@@ -7,7 +7,7 @@ import { captureControlledSourceNative } from 'astro-discussion-bridge/controlle
 import { sourceArticleAttributes } from 'astro-discussion-bridge';
 import Discussion from 'astro-discussion-bridge/Discussion.astro';
 import RichContent from 'astro-discussion-bridge/RichContent.astro';
-import { publicationOptions, nativeProjectRoot } from '../../discussionbridge.server.mjs';
+import { publicationOptions, nativeProjectRoot, nativeStarlight } from '../../discussionbridge.server.mjs';
 
 const { entry } = Astro.props;
 const { Content } = await render(entry);
@@ -19,14 +19,20 @@ if (!fromDiscourse && frontmatter.discussionSync === true) {
   if (typeof entry.filePath !== 'string' || typeof entry.body !== 'string') {
     throw new Error('Actual native entry path and body are required for publication.');
   }
+  const sourceFile = path.isAbsolute(entry.filePath)
+    ? path.resolve(entry.filePath)
+    : fileURLToPath(new URL(entry.filePath, nativeProjectRoot));
   const container = await Container.create();
   const captured = await captureControlledSourceNative(publicationOptions, {
-    filePath: path.isAbsolute(entry.filePath)
-      ? path.resolve(entry.filePath)
-      : fileURLToPath(new URL(entry.filePath, nativeProjectRoot)),
+    filePath: sourceFile,
     sourceArticleUrl: Astro.url.href,
     nativeBody: entry.body,
-    render: () => container.renderToString(Content, { request: Astro.request }),
+    render: async () => nativeStarlight.render({
+      filePath: sourceFile,
+      sourceArticleUrl: Astro.url.href,
+      nativeBody: entry.body,
+      html: await container.renderToString(Content, { request: Astro.request }),
+    }),
   });
   frontmatter = captured.frontmatter;
   sourceCapture = captured.source;

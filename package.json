@@ -15,7 +15,7 @@
   "dependencies": {
     "@astrojs/starlight": "0.42.0",
     "astro": "7.3.8",
-    "astro-discussion-bridge": "file:../../../../../../Products/DiscussionBridge/planning/main-preparation-20261028/repos/astro/.artifacts/astro-v4-20261101T230137161Z-pKSbXS/astro-discussion-bridge-0.4.0-alpha.1.tgz",
+    "astro-discussion-bridge": "file:../../../../../../Products/DiscussionBridge/planning/main-preparation-20261028/repos/astro/.artifacts/astro-v4-20261102T034600207Z-eGhu4B/astro-discussion-bridge-0.4.0-alpha.1.tgz",
     "sharp": "0.35.5"
   },
   "devDependencies": {
