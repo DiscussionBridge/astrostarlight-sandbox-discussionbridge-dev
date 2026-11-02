@@ -51,6 +51,10 @@ export const nativeStarlight = await createNativeStarlightPublication({
     sidebar: [
       { label: 'Sandbox home', link: '/' },
       { label: 'Starlight-authored article', link: '/starlight-to-discourse-v4-workflow-check/' },
+      { label: 'Comments modes', items: [
+        { label: 'Simple comments', link: '/simple-comments/' },
+        { label: 'Full comments', link: '/full-comments/' },
+      ] },
       { label: 'Published from Discourse', items: [{ autogenerate: { directory: 'articles' } }] },
       { label: 'Sandbox forum', link: 'https://sandbox-forum.discussionbridge.dev/' },
     ],

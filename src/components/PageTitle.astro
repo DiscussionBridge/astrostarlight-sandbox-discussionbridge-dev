@@ -2,9 +2,11 @@
 import DefaultPageTitle from '@astrojs/starlight/components/PageTitle.astro';
 
 const data = Astro.locals.starlightRoute.entry.data;
-const managed = data.discussionSync === true
+const needsDiscussionArticle = data.discussionSync === true
   || data.discussionFromDiscourse === true
-  || data.discussionbridgeNativePublication === true;
+  || data.discussionbridgeNativePublication === true
+  || data.discourseTopicId !== undefined
+  || typeof data.discourseTopicUrl === 'string';
 ---
-{!managed && <DefaultPageTitle />}
+{!needsDiscussionArticle && <DefaultPageTitle />}
 
