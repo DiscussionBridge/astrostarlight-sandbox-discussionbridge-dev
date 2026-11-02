@@ -1,0 +1,13 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "astrostarlight-sandbox-discussionbridge-dev",
+  "account_id": "b951a1f598b7d38f3c054ffdb5b97030",
+  "compatibility_date": "2026-09-04",
+  "routes": [
+    { "pattern": "astrostarlight.sandbox.discussionbridge.dev", "custom_domain": true }
+  ],
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page"
+  }
+}

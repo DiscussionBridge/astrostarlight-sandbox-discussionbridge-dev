@@ -1,0 +1,13 @@
+---
+import DefaultMarkdownContent from '@astrojs/starlight/components/MarkdownContent.astro';
+import NativeArticle from './NativeArticle.astro';
+
+const entry = Astro.locals.starlightRoute.entry;
+const managed = entry.data.discussionSync === true
+  || entry.data.discussionFromDiscourse === true
+  || entry.data.discussionbridgeNativePublication === true;
+---
+<DefaultMarkdownContent>
+  {managed ? <NativeArticle entry={entry}><slot /></NativeArticle> : <slot />}
+</DefaultMarkdownContent>
+

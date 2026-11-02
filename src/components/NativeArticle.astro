@@ -1,0 +1,74 @@
+---
+import { render } from 'astro:content';
+import { experimental_AstroContainer as Container } from 'astro/container';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { captureControlledSourceNative } from 'astro-discussion-bridge/controlled-creation';
+import { sourceArticleAttributes } from 'astro-discussion-bridge';
+import Discussion from 'astro-discussion-bridge/Discussion.astro';
+import RichContent from 'astro-discussion-bridge/RichContent.astro';
+import { publicationOptions, nativeProjectRoot } from '../../discussionbridge.server.mjs';
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+let frontmatter = entry.data;
+const fromDiscourse = frontmatter.discussionFromDiscourse === true
+  || frontmatter.discussionbridgeNativePublication === true;
+let sourceCapture;
+if (!fromDiscourse && frontmatter.discussionSync === true) {
+  if (typeof entry.filePath !== 'string' || typeof entry.body !== 'string') {
+    throw new Error('Actual native entry path and body are required for publication.');
+  }
+  const container = await Container.create();
+  const captured = await captureControlledSourceNative(publicationOptions, {
+    filePath: path.isAbsolute(entry.filePath)
+      ? path.resolve(entry.filePath)
+      : fileURLToPath(new URL(entry.filePath, nativeProjectRoot)),
+    sourceArticleUrl: Astro.url.href,
+    nativeBody: entry.body,
+    render: () => container.renderToString(Content, { request: Astro.request }),
+  });
+  frontmatter = captured.frontmatter;
+  sourceCapture = captured.source;
+}
+const receipt = fromDiscourse ? frontmatter.discussionbridgeCmsOwnership : undefined;
+if (fromDiscourse && (!receipt || typeof receipt.native_id !== 'string' || typeof receipt.resource_id !== 'string')) {
+  throw new Error('A managed Discourse publication requires its actual native ownership receipt.');
+}
+const ownedAttributes = receipt ? {
+  'data-discussionbridge-cms-native': receipt.native_id,
+  'data-discussionbridge-cms-resource': receipt.resource_id,
+  'data-discussionbridge-cms-revision': frontmatter.discussionbridgeSourceRevision,
+  'data-discussionbridge-cms-mode': frontmatter.discussionCommentsDisplay,
+  'data-discussionbridge-cms-canonical': receipt.canonical_url,
+  'data-discussionbridge-cms-move': receipt.move_id,
+  'data-discussionbridge-cms-nonce': receipt.proof_nonce,
+  'data-discussionbridge-cms-ownership': frontmatter.discussionbridgeCmsOwnershipSha256,
+} : {};
+const hasDiscussion = frontmatter.discourseTopicId !== undefined
+  || typeof frontmatter.discourseTopicUrl === 'string';
+---
+<article
+  class="native-article"
+  data-discussionbridge-native-article
+  {...ownedAttributes}
+  {...(sourceCapture ? sourceArticleAttributes(sourceCapture) : {})}
+>
+  <h1
+    id="_top"
+    data-discussionbridge-cms-title={fromDiscourse ? 'true' : undefined}
+    data-discussionbridge-source-title={sourceCapture ? 'true' : undefined}
+  >{frontmatter.title}</h1>
+  {sourceCapture ? (
+    <div data-discussionbridge-source-content={sourceCapture.ownership.externalId} set:html={sourceCapture.nativeHtml} />
+  ) : Astro.slots.has('default') ? <slot /> : <Content />}
+  {hasDiscussion && <Discussion frontmatter={frontmatter} />}
+</article>
+<RichContent selector="article[data-discussionbridge-native-article]" />
+<style>
+  .native-article { min-width: 0; max-width: 100%; }
+  .native-article :global(img) { max-width: 100%; height: auto; }
+  .native-article :global(pre) { overflow-x: auto; }
+  .native-article :global(table) { display: block; max-width: 100%; overflow-x: auto; }
+</style>
+

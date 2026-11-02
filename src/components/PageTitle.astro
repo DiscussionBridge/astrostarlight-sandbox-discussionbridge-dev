@@ -1,0 +1,10 @@
+---
+import DefaultPageTitle from '@astrojs/starlight/components/PageTitle.astro';
+
+const data = Astro.locals.starlightRoute.entry.data;
+const managed = data.discussionSync === true
+  || data.discussionFromDiscourse === true
+  || data.discussionbridgeNativePublication === true;
+---
+{!managed && <DefaultPageTitle />}
+
