@@ -1,61 +1,20 @@
-# Starlight Starter Kit: Basics
+# DiscussionBridge Astro and Starlight Sandbox
 
-[![Built with Starlight](https://astro.badg.es/v2/built-with-starlight/tiny.svg)](https://starlight.astro.build)
+Source for the [sandbox](https://astrostarlight.sandbox.discussionbridge.dev/). Use this environment to test the Astro adapter with Starlight.
 
-```
-npm create astro@latest -- --template starlight
-```
+This repository provides the stock Starlight starting point. Verify the
+adapter and configuration of the deployed build before using it as evidence.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Local commands
 
-## 🚀 Project Structure
-
-Inside of your Astro + Starlight project, you'll see the following folders and files:
-
-```
-.
-├── public/
-├── src/
-│   ├── assets/
-│   ├── content/
-│   │   └── docs/
-│   └── content.config.ts
-├── astro.config.mjs
-├── package.json
-└── tsconfig.json
+```sh
+npm ci
+npm run dev
+npm run build
+npm run deploy:dry-run
 ```
 
-Starlight looks for `.md` or `.mdx` files in the `src/content/docs/` directory. Each file is exposed as a route based on its file name.
+Cloudflare Workers serves the generated site. Keep connection secrets in
+protected configuration. Record the package and commit used by a test build.
 
-Images can be added to `src/assets/` and embedded in Markdown with a relative link.
-
-Static assets, like favicons, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Check out [Starlight’s docs](https://starlight.astro.build/), read [the Astro documentation](https://docs.astro.build), or jump into the [Astro Discord server](https://astro.build/chat).
-
-## DiscussionBridge sandbox boundary
-
-This repository is the stock starting point for
-`astrostarlight.sandbox.discussionbridge.dev`. DiscussionBridge is
-deliberately not installed or configured. Human acceptance begins by
-installing the public adapter into this source repository, configuring it
-without committing secrets, building locally, and deploying the committed
-candidate through Cloudflare Workers.
-
-Use `npm run deploy:dry-run` to validate the Worker package and `npm run
-deploy` to publish the generated `dist` directory.
+[Sandbox chooser](https://sandbox.discussionbridge.dev/) · [Astro adapter](https://github.com/DiscussionBridge/astro-discussion-bridge) · [Starlight documentation](https://starlight.astro.build/)
