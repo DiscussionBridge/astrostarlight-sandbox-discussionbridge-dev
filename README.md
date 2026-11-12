@@ -1,20 +1,15 @@
-# DiscussionBridge Astro and Starlight Sandbox
+# Astro and Starlight Sandbox
 
-Source for the [sandbox](https://astrostarlight.sandbox.discussionbridge.dev/). Use this environment to test the Astro adapter with Starlight.
+Try DiscussionBridge on a Starlight documentation site. This repository provides the starting site for that test.
 
-This repository provides the stock Starlight starting point. Verify the
-adapter and configuration of the deployed build before using it as evidence.
+[Open the site](https://astrostarlight.sandbox.discussionbridge.dev/) · [Astro setup guide](https://github.com/DiscussionBridge/astro-discussion-bridge) · [Sandbox chooser](https://sandbox.discussionbridge.dev/)
 
-## Local commands
+## Preview the source
 
 ```sh
 npm ci
 npm run dev
-npm run build
-npm run deploy:dry-run
 ```
 
-Cloudflare Workers serves the generated site. Keep connection secrets in
-protected configuration. Record the package and commit used by a test build.
-
-[Sandbox chooser](https://sandbox.discussionbridge.dev/) · [Astro adapter](https://github.com/DiscussionBridge/astro-discussion-bridge) · [Starlight documentation](https://starlight.astro.build/)
+See [Versions and Live Status](https://docs.discussionbridge.dev/versions-and-live-status/) for DiscussionBridge source tags
+and deployment records.
